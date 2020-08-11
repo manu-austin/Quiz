@@ -26,12 +26,37 @@
   <script>
     $("#random-button").click(function() {
       $( "#TextIntro" ).remove();
+    // add a new div with title
     var newDiv = $("<div>")
+        // is this correct how to add a class?
         $("<div>").addClass("MainDiv");
     newDiv.text("Hello World!");
     $(".jumbotron").append(newDiv);
-    $(.MainDiv).attr("style", "font-weight: bold")
+    newDiv.attr("style", "font-weight: bold")
+
+    var button1FirstQ = $("<button></button>").text("Solution1"); 
+    button1FirstQ.attr("id", "firstButtonFirstQuestion");
+    var button2FirstQ = $("<button></button>").text("Solution2"); 
+    button2FirstQ.attr("id", "secondButtonFirstQuestion");
+    var button3FirstQ = $("<button></button>").text("Solution3"); 
+    button3FirstQ.attr("id", "thirdButtonFirstQuestion");
+    $(newDiv).after(button1FirstQ, button2FirstQ, button3FirstQ);
+            
+    $('#firstButtonFirstQuestion, #secondButtonFirstQuestion').click(function () {
+         alert('Submit 1 clicked');
     });
+
+    $('#thirdButtonFirstQuestion').click(function () {
+         alert('Submit 3 clicked');
+    });
+
+
+    });
+
+    
+  
+
+
 
 
    </script>
