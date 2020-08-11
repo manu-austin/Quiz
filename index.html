@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Quiz</title>
+
+  <!-- Added link to the jQuery Library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+  <!-- Added a link to Bootstrap-->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+
+</head>
+<body>
+
+    <div class="jumbotron" style="margin: 100px; height: 300px">
+        <div id="TextIntro" class="text-center">
+            <h1 class="text-center">Big Quiz!</h1>
+            <p style="text-align: center;"> if you want to do a tough quiz please click on the button below:</p>
+            <button id="random-button" class="btn btn-primary btn-lg">Click!</button>
+        </div>
+    </div>
+
+
+<!-- delete content once button start is clicked -->
+  <script>
+    $("#random-button").click(function() {
+      $( "#TextIntro" ).remove();
+    var newDiv = $("<div>")
+        $("<div>").addClass("MainDiv");
+    newDiv.text("Hello World!");
+    $(".jumbotron").append(newDiv);
+    $(.MainDiv).attr("style", "font-weight: bold")
+    });
+
+
+   </script>
+
+  <!-- Here we have div called "random-number" where our random number will go -->
+  <h1 class="text-center" id="random-number"></h1>
+
+  <!-- <script src="script.js"></script> -->
+
+  
+</body>
+</html>
