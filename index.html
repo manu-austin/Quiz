@@ -24,33 +24,65 @@
 
 <!-- delete content once button start is clicked -->
   <script>
+
     $("#random-button").click(function() {
-      $( "#TextIntro" ).remove();
-    // add a new div with title
-    var newDiv = $("<div>")
-        // is this correct how to add a class?
-        $("<div>").addClass("MainDiv");
-    newDiv.text("Hello World!");
-    $(".jumbotron").append(newDiv);
-    newDiv.attr("style", "font-weight: bold")
 
-    var button1FirstQ = $("<button></button>").text("Solution1"); 
-    button1FirstQ.attr("id", "firstButtonFirstQuestion");
-    var button2FirstQ = $("<button></button>").text("Solution2"); 
-    button2FirstQ.attr("id", "secondButtonFirstQuestion");
-    var button3FirstQ = $("<button></button>").text("Solution3"); 
-    button3FirstQ.attr("id", "thirdButtonFirstQuestion");
-    $(newDiv).after(button1FirstQ, button2FirstQ, button3FirstQ);
-            
-    $('#firstButtonFirstQuestion, #secondButtonFirstQuestion').click(function () {
-         alert('Submit 1 clicked');
-    });
+        $( "#TextIntro" ).remove();
+        // add a new div with title
+        var newDiv = $("<div>");
+        $(".jumbotron").append(newDiv);
+        newDiv.attr("style", "font-weight: bold");
+        newDiv.attr("id", "MainDiv");
+        newDiv.text("Question1"); 
 
-    $('#thirdButtonFirstQuestion').click(function () {
-         alert('Submit 3 clicked');
-    });
+        // add buttons
+        var button1 = $("<button></button>").text("Solution1"); 
+        var button2 = $("<button></button>").text("Solution2");
+        var button3 = $("<button></button>").text("Solution3");
+        var button4 = $("<button></button>").text("Solution4");
+        
+        $(newDiv).append(button1, button2, button3, button4);
+
+        button1.attr("id", "firstButton");
+        button2.attr("id", "secondButton");
+        button3.attr("id", "thirdButton");
+        button4.attr("id", "fourthButton");
+
+        location.reload();
+
+        // put info inside the button depend on the question number
+        for (i=1; i<4; i++) {
+            console.log(i);
+            switch(i) {
+
+                case 1:
+                displayAlert();
+                break;
 
 
+                case 2:
+                newDiv.text("Question2"); 
+                button1 = $("<button></button>").text("Solution22"); 
+                button2 = $("<button></button>").text("Solution22");      
+                button3 = $("<button></button>").text("Solution23");    
+                button4 = $("<button></button>").text("Solution24"); 
+                $(newDiv).append(button1, button2, button3, button4);
+                break;
+
+                case 3:
+                newDiv.text("Question3"); 
+                button1 = $("<button></button>").text("Solution32"); 
+                button2 = $("<button></button>").text("Solution32");      
+                button3 = $("<button></button>").text("Solution33");    
+                button4 = $("<button></button>").text("Solution34"); 
+                $(newDiv).append(button1, button2, button3, button4);
+                break;
+            }
+
+            function displayAlert(){
+            alert('Submit 1 clicked');
+            };
+        }        
     });
 
     
