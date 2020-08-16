@@ -6,23 +6,29 @@ $(document).ready(function() {
     // remove all content of jumbotron once button is clicked
     $("#TextIntro").remove();
 
+    // creation of div for highscore and timer
+    var headerInfo = $("<div>");
+    $("body").prepend(headerInfo);
     var highScores = $("<p>").text("View HighScores");
-    $("body").append(highScores);
+    $(headerInfo).append(highScores);
     highScores.attr("id", "mainhighScores");
-
+    var TimeLeft = ""; // time left on the clock variable
+    var timerClock = $("<p>").text("Time:" + TimeLeft);
+    $(headerInfo).append(timerClock);
 
 
     // add a new div with title
     var newDivQuestion = $("<div>");
+    // add an element for the list of questions
     var newOl = $("<ol>");
-    
+
     $(".jumbotron").append(newDivQuestion);
     $(".jumbotron").append(newOl);
     newDivQuestion.attr("style", "font-weight: bold");
     newDivQuestion.attr("id", "mainDiv");
     newDivQuestion.text("Commonly used data types DO NOT include:"); 
 
-    // add buttons
+    // 4 buttons for the answer buttons
     var button1 = $("<button>").text("1. strings"); 
     var button2 = $("<button>").text("2. booleans");
     var button3 = $("<button>").text("3. alerts");
@@ -30,7 +36,8 @@ $(document).ready(function() {
     
     newOl.attr("id", "mainOl");     
 
-    var newHighScore = [];
+    var newHighScore = {};
+    var numberHighScores = 0;
 
     // add success / fail message
     var responseMessage = $("<p>").text(""); 
@@ -48,9 +55,10 @@ $(document).ready(function() {
     
     $(newOl).append(button1, button2, button3, button4);
 
-    var questionNumber = 1;
-    var totalScore = 0;
+    var questionNumber = 1; // we start at 1 because when we are using this variable question 1 will have already been answered
+    var totalScore = 0; // keep track of the score
 
+    // this is where the questions are modified after first question is answer (and this is why there is no case 1)
     function newQuestion(questionNumber) {
       switch (questionNumber) {
         case 2:
@@ -82,11 +90,13 @@ $(document).ready(function() {
           button4.text("4. console.log"); 
           break;
         case 6:
+        // calls function to show final score after 5 questions are answered
           allDone();
           break;
       }
     };
 
+    // screen change once all questions have been answered
     function allDone() {
       $("#mainOl").remove();
       
@@ -96,6 +106,7 @@ $(document).ready(function() {
 
       var enterInitials = $("<p>").text("Enter initials:"); 
       $(".jumbotron").append(enterInitials); 
+      enterInitials .attr("id", "mainInitials");
 
       var inputBoxName = $("<input type=\"text\" id=\"fieldname\" />");
       $(".jumbotron").append(inputBoxName); 
@@ -105,20 +116,75 @@ $(document).ready(function() {
       submitButton.addClass("buttonHighScore");
       $(".jumbotron").append(submitButton); 
 
+      // capture the name once name is given in the input box 
       $(".buttonHighScore").on("click", function(event) {
-        console.log(inputBoxName.val);
-        HighScoresScreen(inputBoxName.text, totalScore);
+        var inputBoxNameActual = $(inputBoxName).val();
+        numberHighScores ++;
+        newHighScore = { "ActualName" : inputBoxNameActual, "Score" : totalScore};      
+        
+        console.log(numberHighScores);
+        console.log(newHighScore);
+
+        // show highscore screen
+        HighScoresScreen();
       });
     }
 
+    // if "view HighScores is hit on the screen we show highscores"
     $("#mainhighScores").on("click", function() {
-    alert("HighScores");
+        HighScoresScreen();
     });
 
-    function HighScoresScreen(inputBoxName, totalScore){
+    function HighScoresScreen(){
 
+    // remove former information
+        $(mainDiv).remove();
+        $("#mainInitials").remove();
+        $("#mainParagraph").remove();
+        $(fieldname).remove();
+        $(buttonHS).remove();
+        
+
+        var highScoreTitle = $("<div>");
+        $(".jumbotron").append(highScoreTitle);
+        highScoreTitle.attr("style", "font-weight: bold");  
+        $(highScoreTitle).text("Highscores");
+
+        var scoreOl = $("<ol>");
+        scoreOl.attr("id", "scoreOlId"); 
+        $(".jumbotron").append(scoreOl);
+
+        console.log(numberHighScores);
+
+        for (i=0; i<numberHighScores;i++) {
+            var listHighScore = $("<li>").text(i+1 + " - " + newHighScore["ActualName"] + " - Score: " + newHighScore["Score"]); 
+            $(".jumbotron").append(listHighScore);
+        }
+
+        // 2 buttons for go back and clear
+        var buttonBack = $("<button>").text("Go Back"); 
+        var buttonClear = $("<button>").text("Clear Highscores");
+        
+        buttonBack.attr("id", "backToMainPage");
+        buttonBack.addClass("backToMainPage");
+        buttonClear.attr("id", "clearHighScores");
+        buttonClear.addClass("clearHighScores");
+        
+        $(".jumbotron").append(buttonBack, buttonClear);
+
+        $("#clearHighScores").click("click", function(event) {
+            $("#scoreOlId").empty;
+        });
+        
     }
 
+    
+    $("#backToMainPage").click("click", function(event) {
+        newQuestion();
+    });
+    
+
+    // Called function once one answer is clicked => generates a fading message if right or wrong
     $(".button").on("click", function(event) {
       var buttonclicked = this.id;
       
@@ -167,6 +233,7 @@ $(document).ready(function() {
       } 
       
       questionNumber++;
+      // Moves on to the next question until reach the end of the questions
       newQuestion(questionNumber);
     });
 
